@@ -1,0 +1,5 @@
+module(name = "fast_bleu_cpp_bcr_test")
+
+bazel_dep(name = "fast-bleu-cpp", version = "0.1.0")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_cc", version = "0.2.25")

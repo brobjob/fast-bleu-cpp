@@ -1,0 +1,14 @@
+{
+    "homepage": "https://github.com/brobjob/fast-bleu-cpp",
+    "maintainers": [
+        {
+            "github": "brobjob",
+            "github_user_id": 321909985
+        }
+    ],
+    "repository": [
+        "github:brobjob/fast-bleu-cpp"
+    ],
+    "versions": [],
+    "yanked_versions": {}
+}

@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Build deterministic source archive
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          repository="${GITHUB_REPOSITORY#*/}"
+          version="${TAG_NAME#v}"
+          git archive \
+            --format=tar.gz \
+            --prefix="${repository}-${version}/" \
+            --output="${repository}-${version}.tar.gz" \
+            "${TAG_NAME}"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          repository="${GITHUB_REPOSITORY#*/}"
+          version="${TAG_NAME#v}"
+          gh release create \
+            "${TAG_NAME}" \
+            "${repository}-${version}.tar.gz" \
+            --generate-notes \
+            --verify-tag
